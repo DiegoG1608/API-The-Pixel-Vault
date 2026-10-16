@@ -32,3 +32,4 @@ public class OrderTracking {
     private Orders orders;
 
 }
+//OrderHasProduct
