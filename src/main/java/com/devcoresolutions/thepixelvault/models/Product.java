@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Set;
+
 
 @Entity
 @AllArgsConstructor
@@ -46,4 +48,23 @@ public class Product {
 
     @Column
     private String attributes;
+
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+            name = "product_has_categories",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "categories_id")
+    )
+    // Para una relación muchos a muchos se recomienda utilizar sets
+    private Set<Categories> categories;
+
+    public void addCategory(Categories category){
+        this.categories.add(category);
+        category.getProducts().add(this);
+    }
+
+    public void removeCategory(Categories category){
+        this.categories.remove(category);
+        category.getProducts().remove(this);
+    }
 }

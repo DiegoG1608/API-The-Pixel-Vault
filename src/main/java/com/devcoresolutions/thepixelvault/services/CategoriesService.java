@@ -1,7 +1,7 @@
 package com.devcoresolutions.thepixelvault.services;
 
 import com.devcoresolutions.thepixelvault.models.Categories;
-import com.devcoresolutions.thepixelvault.repository.CategoriesRepositorie;
+import com.devcoresolutions.thepixelvault.repository.CategoriesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,32 +12,32 @@ import java.util.Optional;
 public class CategoriesService {
 
     @Autowired
-    private CategoriesRepositorie categoriesRepositorie;
+    private CategoriesRepository categoriesRepository;
 
     public List<Categories> getAllCategories() {
-        return categoriesRepositorie.findAll();
+        return categoriesRepository.findAll();
     }
 
     public Optional<Categories> getCategoryById(Long id) {
-        return categoriesRepositorie.findById(id);
+        return categoriesRepository.findById(id);
     }
 
     public Categories saveCategory(Categories category) {
-        return categoriesRepositorie.save(category);
+        return categoriesRepository.save(category);
     }
 
     public Categories updateCategory(Long id, Categories categoryDetails) {
-        return categoriesRepositorie.findById(id).map(category -> {
+        return categoriesRepository.findById(id).map(category -> {
             category.setCategoryName(categoryDetails.getCategoryName());
             category.setCategoryDescription(categoryDetails.getCategoryDescription());
-            return categoriesRepositorie.save(category);
+            return categoriesRepository.save(category);
         }).orElseGet(() -> {
             categoryDetails.setIdCategories(id);
-            return categoriesRepositorie.save(categoryDetails);
+            return categoriesRepository.save(categoryDetails);
         });
     }
 
     public void deleteCategory(Long id) {
-        categoriesRepositorie.deleteById(id);
+        categoriesRepository.deleteById(id);
     }
 }
