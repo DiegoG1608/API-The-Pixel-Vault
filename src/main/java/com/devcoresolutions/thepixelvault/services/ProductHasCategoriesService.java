@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class productHasCategories {
+public class ProductHasCategoriesService {
     private final ProductRepositoy productRepositoy;
     private final CategoriesRepository categoriesRepository;
 
@@ -35,8 +35,13 @@ public class productHasCategories {
         productRepositoy.save(product);
     }
 
+    /**
+     * Se elimina el registro para asignar una categoria al producto.
+     * @param productId
+     * @param categoryId
+     */
     @Transactional
-    public void removeCategorieFromProduct(Long productId, Long categoryId) {
+    public void removeCategoriesFromProduct(Long productId, Long categoryId) {
         // Validar si exite el producto por su id
         Product product = productRepositoy.findById(productId).orElseThrow(
                 () -> new ResourceNotFoundException("Product con el id " + productId + " no encontrado.")
