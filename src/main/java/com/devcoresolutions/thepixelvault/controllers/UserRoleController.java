@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api/userRole")
@@ -20,6 +21,13 @@ public class UserRoleController {
     public ResponseEntity<UserRole> getRoleByUserRoleId(@PathVariable("userRoleId") Long userRoleId){
         UserRole userRole = userRoleService.getUserRoleById(userRoleId);
         return ResponseEntity.ok(userRole);
+    }
+
+    // Obtener todos los roles existentes
+    @GetMapping
+    public ResponseEntity<List<UserRole>> getAllUserRoles(){
+        List<UserRole> roles = userRoleService.getAllUserRoles();
+        return ResponseEntity.ok(roles);
     }
 
     @PostMapping

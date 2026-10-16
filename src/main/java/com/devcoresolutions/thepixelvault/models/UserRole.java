@@ -14,12 +14,11 @@ import java.util.List;
 @Setter
 public class UserRole {
     @Id
+    @Column(name = "iduser_role")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "role_name", nullable = false, length = 50)
     private String roleName;
 
-    @OneToMany(mappedBy = "userRole", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Users> users;
 }

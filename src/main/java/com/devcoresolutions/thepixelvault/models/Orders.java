@@ -36,8 +36,8 @@ public class Orders {
     private Users users;
 
     //Una orden puede tener muchos productos
-    @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<OrderHasProduct> orderHasProducts = new ArrayList<>();
+    //@OneToMany(mappedBy = "orders", cascade = CascadeType.ALL, orphanRemoval = true)
+    //private List<OrderHasProduct> orderHasProducts = new ArrayList<>();
 
     //Una orden puede tener varios estados de rastreo
     @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL, orphanRemoval = true)
