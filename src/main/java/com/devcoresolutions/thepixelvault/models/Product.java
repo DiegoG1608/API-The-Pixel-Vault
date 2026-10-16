@@ -1,10 +1,13 @@
 package com.devcoresolutions.thepixelvault.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.Set;
 
 
 @Entity
@@ -46,4 +49,27 @@ public class Product {
 
     @Column
     private String attributes;
+
+    /* ?============= Muchos a Muchos (ManyToMany) ============= */
+    /* * Un categorias puede tener muchos producto */
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+            name = "product_has_categories",
+            joinColumns =  @JoinColumn(name = "id_product"),
+            inverseJoinColumns =  @JoinColumn(name = "id_categories")
+    )
+    private Set<Categories> categories;
+
+    // Agregar un prodcuto con su categoria
+    public void addCategory(Categories category) {
+        this.categories.add(category);
+        category.getProducts().add(this);
+    }
+
+    // Eliminar un prodcuto y su categoria
+    public void removeCategory(Categories category) {
+        this.categories.remove(category);
+        category.getProducts().remove(this);
+    }
+
 }

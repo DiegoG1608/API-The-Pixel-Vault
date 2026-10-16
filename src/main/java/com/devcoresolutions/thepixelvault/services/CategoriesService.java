@@ -1,7 +1,7 @@
 package com.devcoresolutions.thepixelvault.services;
 
 import com.devcoresolutions.thepixelvault.models.Categories;
-import com.devcoresolutions.thepixelvault.repository.CategoriesRepositorie;
+import com.devcoresolutions.thepixelvault.repository.CategoriesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +12,7 @@ import java.util.Optional;
 public class CategoriesService {
 
     @Autowired
-    private CategoriesRepositorie categoriesRepositorie;
+    private CategoriesRepository categoriesRepositorie;
 
     public List<Categories> getAllCategories() {
         return categoriesRepositorie.findAll();
