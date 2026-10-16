@@ -1,4 +1,4 @@
-package com.devcoresolutions.thepixelvault.service;
+package com.devcoresolutions.thepixelvault.services;
 
 import com.devcoresolutions.thepixelvault.dtos.OrdersRequest;
 import com.devcoresolutions.thepixelvault.exceptions.ResourceNotFoundException;
