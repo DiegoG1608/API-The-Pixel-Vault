@@ -2,7 +2,7 @@ package com.devcoresolutions.thepixelvault.controllers;
 
 import com.devcoresolutions.thepixelvault.dtos.OrdersRequest;
 import com.devcoresolutions.thepixelvault.models.Orders;
-import com.devcoresolutions.thepixelvault.service.OrdersService;
+import com.devcoresolutions.thepixelvault.services.OrdersService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
