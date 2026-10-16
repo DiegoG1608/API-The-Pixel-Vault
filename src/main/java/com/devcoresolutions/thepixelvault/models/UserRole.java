@@ -20,6 +20,6 @@ public class UserRole {
     @Column(name = "role_name", nullable = false, length = 50)
     private String roleName;
 
-    @OneToMany(mappedBy = "user_role", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "userRole", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Users> users;
 }
