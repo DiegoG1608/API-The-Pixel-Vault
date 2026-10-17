@@ -1,6 +1,9 @@
 package com.devcoresolutions.thepixelvault.models;
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.*;
+@Entity
+
 
 public class OrderHasProduct {
     @Id
