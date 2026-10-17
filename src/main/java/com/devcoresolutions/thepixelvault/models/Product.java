@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 
@@ -37,8 +39,8 @@ public class Product {
     @Column(nullable = false)
     private Integer stock;
 
-    @Column(nullable = false, columnDefinition = "default 1")
-    private Byte status = 1;
+    @Column(nullable = false)
+    private Boolean status = true;
 
     @Column(nullable = false)
     private String game;
@@ -49,6 +51,9 @@ public class Product {
     @Column
     private String attributes;
 
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderHasProduct> orderHasProducts;
+
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "product_has_categories",
@@ -56,7 +61,7 @@ public class Product {
             inverseJoinColumns = @JoinColumn(name = "categories_id")
     )
     // Para una relación muchos a muchos se recomienda utilizar sets
-    private Set<Categories> categories;
+    private Set<Categories> categories = new HashSet<>();
 
     public void addCategory(Categories category){
         this.categories.add(category);

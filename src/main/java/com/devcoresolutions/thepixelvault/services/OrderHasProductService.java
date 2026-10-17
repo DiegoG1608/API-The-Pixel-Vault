@@ -35,7 +35,7 @@ public class OrderHasProductService {
     }
 
     public List<OrderHasProduct> findByOrderId(Long orderId) {
-        return orderHasProductRepository.findById_OrderIdorder(orderId);
+        return orderHasProductRepository.findByOrders(orderId);
     }
 
     @Transactional

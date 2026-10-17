@@ -58,7 +58,7 @@ public class ProductController {
         return ResponseEntity.ok(product);
     }
 
-    //Eliminar producto
+    //Eliminar producto este aún no funciona, me imagino que porque tienes que borrar su relación con categorías a la hora de eliminarlo de la base de datos
     @DeleteMapping(path = "/products/{productId}")
     public ResponseEntity<Product> eliminateProductById(@PathVariable("productId") Long productId){
         Product product = productService.eliminateProductById(productId);
@@ -75,20 +75,20 @@ public class ProductController {
 
 
     /* ? Agregar categoria al producto */
-    @PostMapping(path = "{productId}/track/{categoryId}")
+    @PostMapping(path = "products/{productId}/categories/{categoryId}")
     public ResponseEntity<Void> addProductToCategory(
-            @PathVariable("playlistId") Long playListId,
-            @PathVariable("trackId") Long trackId) {
-        productHasCategoriesService.addProductToCategory(trackId,playListId);
+            @PathVariable("productId") Long productId,
+            @PathVariable("categoryId") Long categoryId) {
+        productHasCategoriesService.addProductToCategory(productId,categoryId);
         return  ResponseEntity.ok().build();
     }
 
     /* ? Eliminar categoria al producto */
-    @DeleteMapping(path = "{productId}/track/{categoryId}")
+    @DeleteMapping(path = "products/{productId}/categories/{categoryId}")
     public ResponseEntity<Void> removeCategorieFromProduct(
-            @PathVariable("playlistId") Long playListId,
-            @PathVariable("trackId") Long trackId) {
-        productHasCategoriesService.removeCategoriesFromProduct(trackId,playListId);
+            @PathVariable("productId") Long productId,
+            @PathVariable("categoryId") Long categoryId) {
+        productHasCategoriesService.removeCategoriesFromProduct(productId, categoryId);
         return  ResponseEntity.ok().build();
     }
 }
