@@ -47,7 +47,6 @@ public class Users {
     @Size(max = 1)
     private Byte status;
 
-    @Column
     @ManyToOne
     @JoinColumn(name = "user_role_iduser_role", nullable = false)
     private UserRole userRoleIdUserRole;

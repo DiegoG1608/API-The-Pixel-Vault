@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "categories")
@@ -26,6 +27,12 @@ public class Categories {
 
     @Column(name = "category_description", length = 255)
     private String categoryDescription;
+
+    /* ?============= Muchos a Muchos (ManyToMany) ============= */
+    /* * Un producto puede tener muchas categorias */
+    @ManyToMany(mappedBy = "categories")
+    @JsonIgnore
+    private Set<Product> products;
 
 
 }
