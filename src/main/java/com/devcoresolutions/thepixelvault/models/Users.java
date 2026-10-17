@@ -49,7 +49,7 @@ public class Users {
 
     @ManyToOne
     @JoinColumn(name = "user_role_iduser_role", nullable = false)
-    private UserRole userRoleIdUserRole;
+    private UserRole userRole;
 
     @Column(nullable = false)
     private String userLastNameSecond;
