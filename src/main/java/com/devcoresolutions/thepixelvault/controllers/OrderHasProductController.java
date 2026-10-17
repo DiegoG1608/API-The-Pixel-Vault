@@ -16,30 +16,28 @@ import java.util.List;
 @CrossOrigin(origins = "*") // Ajusta según tus necesidades de CORS para el frontend
 public class OrderHasProductController {
 
-    @Autowired
-    private OrderHasProductService orderHasProductService;
+        @Autowired
+        private OrderHasProductService orderHasProductService;
 
-    @GetMapping
-    public ResponseEntity<List<OrderHasProduct>> getAllOrderProducts() {
-        return ResponseEntity.ok(orderHasProductService.findAll());
-    }
+        @GetMapping
+        public ResponseEntity<List<OrderHasProduct>> getAllOrderProducts() {
+            return ResponseEntity.ok(orderHasProductService.findAll());
+        }
 
-    @GetMapping("/order/{orderId}")
-    public ResponseEntity<List<OrderHasProduct>> getProductsByOrder(@PathVariable Integer orderId) {
-        return ResponseEntity.ok(orderHasProductService.findByOrderId(orderId));
-    }
+        @GetMapping("/order/{orderId}")
+        public ResponseEntity<List<OrderHasProduct>> getProductsByOrder(@PathVariable Long orderId) { // Ajustado a Long si tu ID es Long
+            return ResponseEntity.ok(orderHasProductService.findByOrderId(orderId));
+        }
 
-    @PostMapping
-    public ResponseEntity<OrderHasProduct> addProductToOrder(@Valid @RequestBody OrderHasProductRequest request) {
-        OrderHasProduct savedRelation = orderHasProductService.save(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedRelation);
-    }
+        @PostMapping
+        public ResponseEntity<OrderHasProduct> addProductToOrder(@Valid @RequestBody OrderHasProductRequest request) {
+            OrderHasProduct savedRelation = orderHasProductService.save(request);
+            return ResponseEntity.status(HttpStatus.CREATED).body(savedRelation);
+        }
 
-    @DeleteMapping("/order/{orderId}/product/{productId}")
-    public ResponseEntity<Void> removeProductFromOrder(
-            @PathVariable Integer orderId,
-            @PathVariable Integer productId) {
-        orderHasProductService.delete(orderId, productId);
-        return ResponseEntity.noContent().build();
+        @DeleteMapping("/{id}") // O si prefieres eliminar por los IDs, adaptas el endpoint
+        public ResponseEntity<Void> removeProductFromOrder(@PathVariable Long id) {
+            orderHasProductService.delete(id);
+            return ResponseEntity.noContent().build();
+        }
     }
-}

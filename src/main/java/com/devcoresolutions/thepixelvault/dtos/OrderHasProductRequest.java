@@ -9,14 +9,14 @@ import java.math.BigDecimal;
 public class OrderHasProductRequest {
 
     @NotNull(message = "El ID del pedido es obligatorio")
-    private Integer orderId;
+    private Long orderId;
 
     @NotNull(message = "El ID del producto es obligatorio")
-    private Integer productId;
+    private Long productId;
 
     @NotNull(message = "La cantidad es obligatoria")
     @Min(value = 1, message = "La cantidad debe ser al menos 1")
     private Integer orderQuantity;
 
-    private BigDecimal purchasePrice;
+    private Double purchasePrice;
 }
