@@ -17,7 +17,6 @@ import java.util.List;
 @Setter
 public class UserRole {
     @Id
-    @Column(name = "iduser_role")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "iduser_role")
     private Long id;
