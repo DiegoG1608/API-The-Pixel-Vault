@@ -31,7 +31,11 @@ public class Orders {
 
     //Muchas ordenes pertenecen a un usuario
     @ManyToOne
-    @JoinColumn(name = "user_iduser", nullable = false)
+    @JoinColumns({
+            @JoinColumn(name = "user_iduser", referencedColumnName = "iduser"),
+            @JoinColumn(name = "user_user_role_iduser_role", referencedColumnName = "user_role_iduser_role")
+    })
+    //@JoinColumn(name = "user_iduser", nullable = false)
     @JsonIgnore
     private Users users;
 
