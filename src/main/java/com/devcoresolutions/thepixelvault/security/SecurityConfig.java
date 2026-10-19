@@ -8,11 +8,11 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 
-@Configuration
-@EnableWebSecurity
-@RequiredArgsConstructor
+//@Configuration
+//@EnableWebSecurity
+//@RequiredArgsConstructor
 public class SecurityConfig {
-
+/*
     @Bean //indica que una clase o un metodo pasa a ser gestionado por spring
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http
@@ -22,5 +22,5 @@ public class SecurityConfig {
                 .httpBasic(httpBasic -> httpBasic.disable());
         return http.build();
     }
-
+*/
 }
