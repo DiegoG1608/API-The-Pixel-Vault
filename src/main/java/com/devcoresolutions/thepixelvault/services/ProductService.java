@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -31,7 +32,8 @@ public class ProductService {
 
     public List<Product> getProductsByCategoryId(Long categoryId){
         if(!categoriesRepository.existsById(categoryId)) throw new ResourceNotFoundException("Categoría con id "+categoryId+" no encontrada");
-        return productRepository.findByCategoryId(categoryId);
+        Optional<Categories> category = categoriesRepository.findById(categoryId);
+        return productRepository.findByCategories(category.orElse(null));
     }
     //Post
     public Product createProductByCategoryId(Long categoryId, ProductRequest productRequest){
@@ -48,6 +50,7 @@ public class ProductService {
         product.setGame(productRequest.game());
         product.setBrand(productRequest.brand());
         product.setAttributes(productRequest.attributes());
+        product.addCategory(category);
 
         productRepository.save(product);
         category.getProducts().add(product);

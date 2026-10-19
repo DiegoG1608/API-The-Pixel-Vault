@@ -1,5 +1,6 @@
 package com.devcoresolutions.thepixelvault.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -26,10 +27,12 @@ public class OrderHasProduct {
     // Relación ManyToOne hacia la orden
     @ManyToOne
     @JoinColumn(name = "order_idorder", nullable = false)
+    @JsonIgnore
     private Orders orders;
 
     // Relación ManyToOne hacia el producto
     @ManyToOne
     @JoinColumn(name = "product_idproduct", nullable = false)
+    @JsonIgnore
     private Product product;
 }

@@ -10,8 +10,8 @@ import java.util.List;
 public interface OrderHasProductRepository extends JpaRepository<OrderHasProduct, Long> {
 
     // Buscar todos los productos asociados a un pedido específico
-    List<OrderHasProduct> findById_OrderIdorder(Long orderId);
+    List<OrderHasProduct> findByOrders(Long orderId);
 
     // Buscar en qué pedidos ha estado un producto
-    List<OrderHasProduct> findById_ProductIdproduct(Long productId);
+    List<OrderHasProduct> findByProduct(Long productId);
 }
