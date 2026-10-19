@@ -8,7 +8,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -27,6 +29,7 @@ public class Orders {
     @Column(nullable = false)
     Double total;
 
+    //Muchas ordenes pertenecen a un usuario
     @ManyToOne
     @JoinColumns({
             @JoinColumn(name = "user_iduser", referencedColumnName = "iduser"),
@@ -35,5 +38,14 @@ public class Orders {
     //@JoinColumn(name = "user_iduser", nullable = false)
     @JsonIgnore
     private Users users;
+
+    //Una orden puede tener muchos productos
+    @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderHasProduct> orderHasProducts = new ArrayList<>();
+
+    //Una orden puede tener varios estados de rastreo
+    @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderTracking> orderTrackings = new ArrayList<>();
+
 }
 

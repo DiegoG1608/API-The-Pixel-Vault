@@ -17,14 +17,16 @@ import java.util.List;
 @Setter
 public class UserRole {
     @Id
+    @Column(name = "iduser_role")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "iduser_role")
     private Long id;
 
-    @Column(name = "role_name", nullable = false, length = 50)
+    @Column(name = "role_name", nullable = false, unique = true, length = 50)
     private String roleName;
 
     @OneToMany(mappedBy = "userRoleIdUserRole", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Users> users;
+
 }
