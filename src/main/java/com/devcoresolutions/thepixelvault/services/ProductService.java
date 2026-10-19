@@ -75,8 +75,9 @@ public class ProductService {
 
     //Delete? Es más cambiar el status que borrar el producto como tal
     public Product deleteProductById(Long productId){
+        Byte deletedStatus = 0;
         Product product = getProductById(productId);
-        product.setStatus(false);
+        product.setStatus(deletedStatus);
         return productRepository.save(product);
     }
 

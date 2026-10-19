@@ -39,8 +39,8 @@ public class Product {
     @Column(nullable = false)
     private Integer stock;
 
-    @Column(nullable = false)
-    private Boolean status = true;
+    @Column(nullable = false,columnDefinition = "TINYINT DEFAULT 1")
+    private Byte status = 1;
 
     @Column(nullable = false)
     private String game;
