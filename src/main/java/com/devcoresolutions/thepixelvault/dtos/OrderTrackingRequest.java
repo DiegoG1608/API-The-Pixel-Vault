@@ -1,13 +1,14 @@
 package com.devcoresolutions.thepixelvault.dtos;
 
-import jakarta.validation.constraints.NotBlank;
 
-import java.util.Date;
+import jakarta.validation.constraints.NotNull;
+
+import java.time.LocalDate;
 
 public record OrderTrackingRequest (
-        Date estimatedDeliveryDate,
+        LocalDate estimatedDeliveryDate,
         String orderStatus,
-        @NotBlank
+        @NotNull
         Long orderId
 ) {
 }
