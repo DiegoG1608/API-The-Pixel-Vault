@@ -1,5 +1,6 @@
 package com.devcoresolutions.thepixelvault.controllers;
 
+import com.devcoresolutions.thepixelvault.dtos.RegisterRequest;
 import com.devcoresolutions.thepixelvault.dtos.UsersRequest;
 import com.devcoresolutions.thepixelvault.models.Users;
 import com.devcoresolutions.thepixelvault.services.UsersService;
@@ -59,6 +60,16 @@ public class UsersController {
             @RequestBody UsersRequest usersRequest) {
 
         Users users = usersService.updateUsers(id, usersRequest);
+        return ResponseEntity.ok(users);
+    }
+
+    // URL Ejemplo: http://localhost:8080/api/users/part/1
+    @PutMapping(path = "/part/{id}")
+    public ResponseEntity<Users> parcialUpdateUsersById(
+            @PathVariable("id") Long id,
+            @RequestBody RegisterRequest registerRequest) {
+
+        Users users = usersService.updateUsers(id, registerRequest);
         return ResponseEntity.ok(users);
     }
 
