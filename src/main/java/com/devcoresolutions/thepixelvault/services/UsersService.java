@@ -1,5 +1,6 @@
 package com.devcoresolutions.thepixelvault.services;
 
+import com.devcoresolutions.thepixelvault.dtos.RegisterRequest;
 import com.devcoresolutions.thepixelvault.dtos.UsersRequest;
 import com.devcoresolutions.thepixelvault.exceptions.ResourceNotFoundException;
 import com.devcoresolutions.thepixelvault.models.Users;
@@ -81,8 +82,26 @@ public class UsersService {
         if (updateUser.userLastNameSecond() != null) oldUser.setUserLastNameSecond(updateUser.userLastNameSecond());
         if (updateUser.userAddress() != null) oldUser.setUserAddress(updateUser.userAddress());
 
-        // Si el diseño permite cambiar de rol en la clave compuesta, tendrías que manejarlo aquí.
-        // Pero comúnmente una clave primaria compuesta no debe modificarse directamente.
+        return usersRepository.save(oldUser);
+    }
+
+    public Users updateUsers(Long id, RegisterRequest updateUser) {
+        Users oldUser = usersRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("Usuario con el id " + id + " no encontrado")
+        );
+
+        if (updateUser.email() != null) oldUser.setEmail(updateUser.email());
+
+        // Si cambia contraseña, volver a encriptar
+        if (updateUser.password() != null) oldUser.setPassword(passwordEncoder.encode(updateUser.password()));
+
+        if (updateUser.userName() != null) oldUser.setUserName(updateUser.userName());
+        if (updateUser.userMiddleName() != null) oldUser.setUserMiddleName(updateUser.userMiddleName());
+        if (updateUser.userPhone() != null) oldUser.setUserPhone(updateUser.userPhone());
+        if (updateUser.userLastNameFirst() != null) oldUser.setUserLastNameFirst(updateUser.userLastNameFirst());
+        if (updateUser.status() != null) oldUser.setStatus(updateUser.status());
+        if (updateUser.userLastNameSecond() != null) oldUser.setUserLastNameSecond(updateUser.userLastNameSecond());
+        if (updateUser.userAddress() != null) oldUser.setUserAddress(updateUser.userAddress());
 
         return usersRepository.save(oldUser);
     }
@@ -93,4 +112,6 @@ public class UsersService {
         );
         usersRepository.delete(user);
     }
+
+
 }
