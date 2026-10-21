@@ -24,7 +24,7 @@ public class UserRole {
     @Column(name = "role_name", nullable = false, unique = true, length = 50)
     private String roleName;
 
-    @OneToMany(mappedBy = "userRoleIdUserRole", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "idUserRole", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Users> users;
 

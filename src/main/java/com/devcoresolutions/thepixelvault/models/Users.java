@@ -8,7 +8,6 @@ import lombok.*;
 
 @Entity
 @Table(name = "users") //Aseguramos que el nombre de la tabla de la base de datos coincida con el de la clase
-@IdClass(UsersId.class)
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -20,10 +19,9 @@ public class Users {
     @Column(name = "iduser") //aseguramos que coincida el nombre de la columna de la tabla en la base de datos con el nombre del atributo de la clas
     private Long id;
 
-    @Id //Se coloca de igual forma la notacion @Id porque en la tabla de base de datos esta columna que es una llave forane, también forma parte de la llave primaria
     @ManyToOne
-    @JoinColumn(name = "user_role_iduser_role", nullable = false)
-    private UserRole userRoleIdUserRole;
+    @JoinColumn(name = "iduser_role", nullable = false)
+    private UserRole idUserRole;
 
     @Column(nullable = false)
     @Size(max = 100)

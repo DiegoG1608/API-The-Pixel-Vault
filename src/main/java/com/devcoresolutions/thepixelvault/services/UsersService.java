@@ -3,7 +3,6 @@ package com.devcoresolutions.thepixelvault.services;
 import com.devcoresolutions.thepixelvault.dtos.UsersRequest;
 import com.devcoresolutions.thepixelvault.exceptions.ResourceNotFoundException;
 import com.devcoresolutions.thepixelvault.models.Users;
-import com.devcoresolutions.thepixelvault.models.UsersId;
 import com.devcoresolutions.thepixelvault.models.UserRole;
 import com.devcoresolutions.thepixelvault.repository.UsersRepository;
 import com.devcoresolutions.thepixelvault.repository.UserRoleRepository; // <--- Asegúrate de tener este repositorio creado
@@ -25,9 +24,15 @@ public class UsersService {
         return usersRepository.findAll();
     }
 
-    public Users getUsersById(UsersId id){
+    public Users getUsersById(Long id){
         return usersRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("Usuario con el id " + id + " no encontrado")
+        );
+    }
+
+    public Users getUserByEmail(String email){
+        return usersRepository.findByEmail(email).orElseThrow(
+                () -> new ResourceNotFoundException("Usuario con el email " + email + " no encontrado")
         );
     }
 
@@ -53,12 +58,12 @@ public class UsersService {
         user.setUserAddress(newUser.userAddress());
 
         // 3. Asignar obligatoriamente la parte de la clave compuesta del rol
-        user.setUserRoleIdUserRole(role);
+        user.setIdUserRole(role);
 
         return usersRepository.save(user);
     }
 
-    public Users updateUsers(UsersId id, UsersRequest updateUser){
+    public Users updateUsers(Long id, UsersRequest updateUser){
         Users oldUser = usersRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("Usuario con el id " + id + " no encontrado")
         );
@@ -82,7 +87,7 @@ public class UsersService {
         return usersRepository.save(oldUser);
     }
 
-    public void deleteUsersById(UsersId id){ // Cambiado a void ya que el controlador maneja NoContent
+    public void deleteUsersById(Long id){ // Cambiado a void ya que el controlador maneja NoContent
         Users user = usersRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("Usuario con el id " + id + " no encontrado")
         );
