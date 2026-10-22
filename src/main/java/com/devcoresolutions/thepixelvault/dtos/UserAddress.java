@@ -6,7 +6,7 @@ public record UserAddress(
         String number,
         String sector,
         String street,
-        Integer country,
+        String country,
         String zipCode
 ) {
 

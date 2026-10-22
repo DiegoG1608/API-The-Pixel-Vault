@@ -2,6 +2,7 @@ package com.devcoresolutions.thepixelvault.models;
 
 import com.devcoresolutions.thepixelvault.converters.UserAddressConverter;
 import com.devcoresolutions.thepixelvault.dtos.UserAddress;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.*;
@@ -23,10 +24,11 @@ public class Users {
     @JoinColumn(name = "iduser_role", nullable = false)
     private UserRole idUserRole;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     @Size(max = 100)
     private String email;
 
+    @JsonIgnore //para evitar que el hash salga en las respuestas JSON
     @Column(nullable = false)
     @Size(max = 255)
     private String password;

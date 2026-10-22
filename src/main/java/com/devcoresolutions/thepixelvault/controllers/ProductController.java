@@ -19,21 +19,21 @@ public class ProductController {
     private final ProductService productService;
     private final ProductHasCategoriesService productHasCategoriesService;
 
-    // Obtener todos los productos
+    // Obtener todos los productos (libre)
     @GetMapping(path = "/products")
     public ResponseEntity<List<Product>> getAllProducts(){
         List<Product> products = productService.getAllProducts();
         return ResponseEntity.ok(products);
     }
 
-    // Obtener todos los productos de cierta categoría
+    // Obtener todos los productos de cierta categoría (libre)
     @GetMapping(path = "/categories/{categoryId}/products")
     public ResponseEntity<List<Product>> getAllProductsByCategoryId(@PathVariable("categoryId") Long categoryId){
         List<Product> products = productService.getProductsByCategoryId(categoryId);
         return ResponseEntity.ok(products);
     }
 
-    //Obtener un solo producto por id
+    //Obtener un solo producto por id (libre)
     @GetMapping(path = "/products/{productId}")
     public ResponseEntity<Product> getProductById(@PathVariable("productId") Long productId){
         Product product = productService.getProductById(productId);
@@ -41,7 +41,7 @@ public class ProductController {
     }
 
     //Crear un producto a través de una categoría
-    @PostMapping(path = "/categories/{categoryId}/products")
+    @PostMapping(path = "/products")
     public ResponseEntity<Product> createProductByCategoryId(@PathVariable("categoryId") Long categoryId, @RequestBody ProductRequest productRequest){
         Product product = productService.createProductByCategoryId(categoryId,productRequest);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
