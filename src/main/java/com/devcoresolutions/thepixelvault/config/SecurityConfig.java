@@ -80,7 +80,7 @@ public class SecurityConfig {
           .csrf(csrf -> csrf.disable())
           .authorizeHttpRequests(auth -> auth
                   .requestMatchers("/api/auth/**").permitAll()
-                  .requestMatchers(HttpMethod.GET,"/api/products/").permitAll()
+                  .requestMatchers(HttpMethod.GET,"/api/products","/api/products/**","/api/categories","/api/categories/**").permitAll()
                   .anyRequest().authenticated())
           .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
           .exceptionHandling(e -> e.authenticationEntryPoint(

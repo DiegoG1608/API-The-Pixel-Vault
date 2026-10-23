@@ -43,8 +43,8 @@ public class ProductController {
 
     //Crear un producto a través de una categoría
     @PostMapping(path = "/products")
-    public ResponseEntity<Product> createProductByCategoryId(@PathVariable("categoryId") Long categoryId, @RequestBody ProductRequest productRequest){
-        Product product = productService.createProductByCategoryId(categoryId,productRequest);
+    public ResponseEntity<Product> createProductByCategoryId(@RequestBody ProductRequest productRequest){
+        Product product = productService.createProduct(productRequest);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("{id}")
                 .buildAndExpand(product.getId())
