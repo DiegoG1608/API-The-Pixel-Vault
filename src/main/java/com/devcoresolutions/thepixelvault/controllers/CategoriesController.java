@@ -18,13 +18,13 @@ public class CategoriesController {
     @Autowired
     private CategoriesService categoriesService;
 
-    @GetMapping
+    @GetMapping //(libre)
     public ResponseEntity<List<Categories>> getAllCategories() {
         List<Categories> categories = categoriesService.getAllCategories();
         return ResponseEntity.ok(categories);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id}") //(libre)
     public ResponseEntity<Categories> getCategoryById(@PathVariable Long id) {
         Optional<Categories> category = categoriesService.getCategoryById(id);
         return category.map(ResponseEntity::ok)

@@ -23,7 +23,7 @@ public class ContactSupportController {
         this.contactSupportService = contactSupportService;
     }
 
-    @PostMapping
+    @PostMapping //(libre)
     public ResponseEntity<ContactSupport> createContactSupport(@Valid @RequestBody ContactSupportRequest contactSupportRequest) {
         ContactSupport contactSupport = contactSupportService.createContactSupport(contactSupportRequest);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
