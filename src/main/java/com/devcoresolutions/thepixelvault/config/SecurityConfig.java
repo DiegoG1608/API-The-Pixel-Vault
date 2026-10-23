@@ -80,8 +80,12 @@ public class SecurityConfig {
           .csrf(csrf -> csrf.disable())
           .authorizeHttpRequests(auth -> auth
                   .requestMatchers("/api/auth/**").permitAll()
+                  .requestMatchers(HttpMethod.GET,"/","/index.html","/tienda.html","/contactanos.html","/acercaNosotros.html","/login.html","/soporte.html","/miCarrito.html","/mi-cuenta.html","/registroProducts.html","/styles/**","/assets/**","/javascript/**","/services/**").permitAll()
                   .requestMatchers(HttpMethod.GET,"/api/products","/api/products/**","/api/categories","/api/categories/**").permitAll()
                   .anyRequest().authenticated())
+          .headers(headers -> headers
+                  .frameOptions(frame -> frame.sameOrigin())
+          )
           .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
           .exceptionHandling(e -> e.authenticationEntryPoint(
                   new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
