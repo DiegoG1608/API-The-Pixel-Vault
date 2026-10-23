@@ -36,10 +36,7 @@ public class ProductService {
         return productRepository.findByCategories(category.orElse(null));
     }
     //Post
-    public Product createProductByCategoryId(Long categoryId, ProductRequest productRequest){
-        Categories category = categoriesRepository.findById(categoryId).orElseThrow(
-                () -> new ResourceNotFoundException("Categoría con id "+categoryId+" no fue encontrada")
-        );
+    public Product createProduct(ProductRequest productRequest){
         Product product = new Product();
         product.setName(productRequest.name());
         product.setDescription(productRequest.description());
@@ -50,11 +47,8 @@ public class ProductService {
         product.setGame(productRequest.game());
         product.setBrand(productRequest.brand());
         product.setAttributes(productRequest.attributes());
-        product.addCategory(category);
 
         productRepository.save(product);
-        category.getProducts().add(product);
-        categoriesRepository.save(category);
         return product;
     }
     //Put modificarlo por id

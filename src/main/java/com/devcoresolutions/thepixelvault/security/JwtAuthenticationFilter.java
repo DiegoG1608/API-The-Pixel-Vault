@@ -1,6 +1,7 @@
 package com.devcoresolutions.thepixelvault.security;
 
 
+import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -11,6 +12,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -25,7 +27,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final UserDetailsService userDetailsService;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
+                                    FilterChain filterChain) throws ServletException, IOException {
         final String authHeader = request.getHeader("Authorization");
         System.out.println("1. HEADER RECIBIDO: " + authHeader);
         //verificamos si no hay token , si no hay no hace nada y spring security bloquea la peticion
@@ -36,20 +39,24 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
         //extraer token y email
         final String jwt = authHeader.substring(7);
-        final String userEmail = jwtService.extractEmail(jwt);
-        System.out.println("2. EMAIL EXTRAÍDO DEL TOKEN: " + userEmail);
-        if(userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = userDetailsService.loadUserByUsername(userEmail);
-            if(jwtService.isValidToken(jwt, userDetails.getUsername())){
-                UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                        userDetails,null, Collections.emptyList()
-                );
-                authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                //Registramos el usuario como autenticado
-                SecurityContextHolder.getContext().setAuthentication(authToken);
-                System.out.println("3. ¡AUTENTICACIÓN EXITOSA EN SECURITY CONTEXT!");
+        try {
+            final String userEmail = jwtService.extractEmail(jwt);
+            System.out.println("2. EMAIL EXTRAÍDO DEL TOKEN: " + userEmail);
+            if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                UserDetails userDetails = userDetailsService.loadUserByUsername(userEmail);
+                if (jwtService.isValidToken(jwt, userDetails.getUsername())) {
+                    UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+                            userDetails, null, userDetails.getAuthorities()
+                    );
+                    authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                    //Registramos el usuario como autenticado
+                    SecurityContextHolder.getContext().setAuthentication(authToken);
+                    System.out.println("3. ¡AUTENTICACIÓN EXITOSA EN SECURITY CONTEXT!");
+                }
+                System.out.println("-> REBOTADO: El token no pasó isTokenValid()");
             }
-            System.out.println("-> REBOTADO: El token no pasó isTokenValid()");
+        }catch (JwtException | IllegalArgumentException | UsernameNotFoundException e){
+            System.out.println("Error: " + e.getMessage());
         }
         filterChain.doFilter(request,response);
     }

@@ -34,7 +34,7 @@ public class OrdersControllers {
         return ResponseEntity.ok(order);
     }
     //Crea una orden para este usuario por medio de su id
-    @PostMapping(path = "users/{usersId}/orders")
+    @PostMapping(path = "/{usersId}")
     public ResponseEntity<Orders> createOrderByUserId(@PathVariable("usersId") Long id,
                                                       @RequestBody OrdersRequest ordersRequest){
         Orders orders = orderService.createOrderByUserId(id, ordersRequest);
